@@ -116,7 +116,14 @@ gulp.task("styles", ['config', "sass-lint"], () => {
 });
 
 gulp.task("start", ['config', "scripts", "styles"], () => {
-	// Serve files from this project"s virtual host that has been configured with the server rendering this site
+	const queryStringComponents = []
+
+	/**
+   * Shopify sites with redirection enabled for custom domains force redirection
+   * to that domain. `?_fd=0` prevents that forwarding. (Thanks Slate team!)
+   */
+  queryStringComponents.push('_fd=0');
+
 	browserSync.init({
 		files: [
 			{
@@ -127,7 +134,14 @@ gulp.task("start", ['config', "scripts", "styles"], () => {
 		],
 		port: 8181,
 		notify: false,
-		proxy: conf.vhost,
+		proxy: {
+			target: conf.vhost,
+      middleware: (req, res, next) => {
+        const prefix = req.url.indexOf('?') > -1 ? '&' : '?';
+        req.url += prefix + queryStringComponents.join('&');
+        next();
+      },
+		},
 		logPrefix: conf.vhost,
 	  serveStatic: ['assets'],
 	  rewriteRules: [
