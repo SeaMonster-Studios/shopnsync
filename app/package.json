@@ -1,6 +1,6 @@
 {
-  "name": "SMS",
-  "version": "0.1.0.alpha.1",
+  "name": "shopnsync-app",
+  "version": "0.1.6",
   "description": "Browsersync, Themekit, ES2015",
   "main": "index.js",
   "repository": "",

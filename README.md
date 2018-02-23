@@ -12,7 +12,8 @@ A Shopify *build system* for developers created by SeaMonster Studios
 * Install shopnsync globally with `yarn global add shopnsync` or `npm i -g shopnsync`
 * Setup shopnsync for your theme
   * Make sure your theme (any theme works) is installed in your Shopify store
-  * Make sure you have those theme files local
+  * Make sure you have those theme files local.
+    * > Currently it's not recommend that you download your theme with *themekit*, since some of those files will be overwritten by shopnsync. Instead, you can download it within the *Themes* page of your Shopify admin `/admin/themes`. Then click on the `Actions` button next to your theme, and select `Download theme file`.
   * In the same directory of your theme, run `shopnsync init`. This will copy the build system to your theme, and install necessary dependencies. *Note:* It is recommended that you have your theme backed up (git is recommended) before doing this. You shouldn't need to worry about any conflicts, but if you have files of the same name (listed below) it'll replace them.
 * Setup Authentication, and get theme ID. [Instructions here](https://shopify.github.io/themekit/#get-api-access)
   * Note: after doing this, you should have updated the `password`, `theme_id`, and `store` variables in the *config.yml* file.
