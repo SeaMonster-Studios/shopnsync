@@ -1,7 +1,7 @@
-# SMS
+# Shopnsync
 A Shopify *build system* for developers created by SeaMonster Studios
 
-*NOTE: Still in Alpha. Please report any bugs you find or suggestions you may have.*
+*NOTE: Still in development. Please report any bugs you find or suggestions you may have.*
 
 ## Requirements
 * node: >=9.0.0
