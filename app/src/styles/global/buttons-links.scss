@@ -1,0 +1,88 @@
+a {
+  color: $orange;
+  transition: color 0.3s ease;
+
+  &:hover,
+  &:active,
+  &.active {
+    text-decoration: underline;
+    color: darken($primary, 10%);
+  }
+
+  &:focus { color: lighten($primary, 10%); }
+}
+
+.btn,
+button,
+button[type="button"],
+button[type="submit"],
+input[type="submit"],
+a[class*='btn'] {
+  font-size: 1rem;
+  line-height: 1.1875;
+  padding: 9px 24px 8px;
+  color: $white;
+  cursor: pointer;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.16);
+  border-radius: 4px;
+  border: none;
+  transition: 0.3s ease;
+  background: $primary;
+  text-decoration: none;
+
+  &.btn-secondary {
+    background: $secondary;
+  }
+
+  &.btn-round {
+    border-radius: 100px;
+  }
+
+  &.btn-lg {
+    font-size: $font-size-lg;
+    padding: 20px 32px 19px;
+  }
+
+  &.btn-md {
+    font-size: $font-size-lg;
+    padding: 14px 32px 13px;
+  }
+
+  &.btn-sm {
+    padding: 9px 32px 8px;
+    line-height: 19px;
+  }
+
+  &.btn-delete {
+    background: $white;
+    color: $red;
+    font-weight: $font-weight-bold;
+    box-shadow: none;
+  }
+
+  &:hover,
+  &:active,
+  &.active, {
+    background: darken($primary, 10%);
+
+    &.btn-secondary {
+      background: darken($secondary, 10%);
+    }
+
+    &.btn-delete {
+      background: $white;
+      box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.16);
+      color: $red;
+    }
+  }
+
+  &:hover,
+  &:active,
+  &.active,
+  &:focus {
+    text-decoration: none;
+    color: $white;
+
+    &.btn-delete { color: $red; }
+  }
+}

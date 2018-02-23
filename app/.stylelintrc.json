@@ -1,0 +1,12 @@
+{
+	"configBasedir": "./src/styles",
+	"extends": "stylelint-config-standard",
+  "rules": {
+    "indentation": [2, {
+      "except": ["value"]
+    }]
+  },
+	"ignoreFiles": [
+		"./node_modules/**"
+	]
+}
