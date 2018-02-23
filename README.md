@@ -54,4 +54,3 @@ A Shopify *build system* for developers created by SeaMonster Studios
 * yarn.lock
 * src/scripts/... (some scripts and libs I commonly use, feel free to remove them)
 * src/styles/... (some styles and libs I commonly use, feel free to remove them)
-
