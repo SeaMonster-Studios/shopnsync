@@ -42,16 +42,16 @@ A Shopify *build system* for developers created by SeaMonster Studios
 * I intentionally copy all the configs and Gulpfile to your theme directory so that you can modify w/e you want for your needs.
 
 ## Files copied from `shopnsync init`
-.eslintrc.json
-.gitignore
-.stylelintrc.json
-.themekit_ignores
-config.yml
-Gulpfile.js
-package.json
-README.md
-theme.lock
-yarn.lock
-src/scripts/... (some scripts and libs I commonly use, feel free to remove them)
-src/styles/... (some styles and libs I commonly use, feel free to remove them)
+* .eslintrc.json
+* .gitignore
+* .stylelintrc.json
+* .themekit_ignores
+* config.yml
+* Gulpfile.js
+* package.json
+* README.md
+* theme.lock
+* yarn.lock
+* src/scripts/... (some scripts and libs I commonly use, feel free to remove them)
+* src/styles/... (some styles and libs I commonly use, feel free to remove them)
 
