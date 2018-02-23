@@ -52,6 +52,6 @@ package.json
 README.md
 theme.lock
 yarn.lock
-src/scripts/...
-src/styles/...
+src/scripts/... (some scripts and libs I commonly use, feel free to remove them)
+src/styles/... (some styles and libs I commonly use, feel free to remove them)
 
