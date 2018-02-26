@@ -146,8 +146,8 @@ gulp.task("start", ['config', "scripts", "styles"], () => {
 	  serveStatic: ['assets'],
 	  rewriteRules: [
       {
-        match: new RegExp(conf.asset_url + '(.*)', 'g'),
-        replace: "/$1",
+        match: new RegExp('\/\/cdn\.shopify\.com\/.*\/files\/.*\/assets\/((.(?!.*\.scss))*$)', 'gm'),
+        replace: "$1",
       }
 	  ],
 		reloadOnRestart: true,

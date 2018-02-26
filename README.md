@@ -17,12 +17,6 @@ A Shopify *build system* for developers created by SeaMonster Studios
   * In the same directory of your theme, run `shopnsync init`. This will copy the build system to your theme, and install necessary dependencies. *Note:* It is recommended that you have your theme backed up (git is recommended) before doing this. You shouldn't need to worry about any conflicts, but if you have files of the same name (listed below) it'll replace them.
 * Setup Authentication, and get theme ID. [Instructions here](https://shopify.github.io/themekit/#get-api-access)
   * Note: after doing this, you should have updated the `password`, `theme_id`, and `store` variables in the *config.yml* file.
-* Get asset_url (this part is a little annoying but necessary to get assets livereloading correctly). Instructions for doing so in Chrome are below, but other browsers should be similar.
-  1. Preview your theme in Shopify
-  2. Right click on the page, click "View Page Source".
-  3. Do a page search (CMD + F for mac, CTR + F for PC/Linux) for `assets`
-  4. It should start with `//cdn.shopify.com/files` — copy everything from there to `assets/` (including the forward slash). Note: it should be similar to what's already in the *config.yml* by default.
-  5. Replace the `asset_url` in the *config.yml* with the text you just copied.
 * Setup assets
   * Add {{ 'index.js' | asset_url | script_tag }} to your theme
   * Add {{ 'index.min.css' | asset_url | stylesheet_tag }} to your theme
