@@ -147,7 +147,7 @@ gulp.task("start", ['config', "scripts", "styles"], () => {
 	  rewriteRules: [
       {
         match: new RegExp('\/\/cdn\.shopify\.com\/.*\/files\/.*\/assets\/((.(?!.*\.scss))*$)', 'gm'),
-        replace: "$1",
+        replace: "/$1",
       }
 	  ],
 		reloadOnRestart: true,
@@ -155,7 +155,8 @@ gulp.task("start", ['config', "scripts", "styles"], () => {
 
 	gulp.watch(["assets/**"], ['themekit:upload'])
 	gulp.watch(["src/styles/**"], ["styles"]);
-	gulp.watch(["src/scripts/**"], ["scripts"]).on('change', browserSync.reload);
+	gulp.watch(["src/scripts/**"], ["scripts"]);
+	gulp.watch(["assets/index.js"]).on('change', browserSync.reload);
 	gulp.watch([conf.watchViews], ['upload']);
 });
 

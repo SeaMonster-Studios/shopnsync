@@ -1,6 +1,6 @@
 {
   "name": "shopnsync",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "A utility for Shopify developers that uses Browsersync, Themekit, ES2015",
   "main": "init.js",
   "scripts": {
