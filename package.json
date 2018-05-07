@@ -1,7 +1,8 @@
 {
-  "name": "shopnsync",
+  "name": "@seamonster-studios/shopnsync",
   "version": "0.2.1",
-  "description": "A utility for Shopify developers that uses Browsersync, Themekit, ES2015",
+  "description":
+    "A utility for Shopify developers that uses Browsersync, Themekit, ES2015",
   "main": "init.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
