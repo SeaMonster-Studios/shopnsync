@@ -1,28 +1,4 @@
 development:
   password: 
   theme_id: ""
-  store: 
-  views:
-  - config
-  - layout
-  - locales
-  - sections
-  - snippets
-  - templates
-  dist: assets/
-  scripts:
-  - src/scripts/*.js
-  - src/scripts/**/*.js
-  - src/scripts/**/**/*.js
-  scriptsToLint:
-  - src/scripts/*.js
-  - src/scripts/**/*.js
-  - src/scripts/**/**/*.js
-  - src/scripts/**/**/**/*.js
-  - "!src/scripts/libs/**"
-  sassIndex:
-  - src/styles/index.scss
-  sassFilesToLint:
-  - src/styles/**
-  - "!src/styles/libs/**"
-
+  store:
