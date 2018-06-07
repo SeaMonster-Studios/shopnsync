@@ -45,6 +45,7 @@
     "file-loader": "^1.1.11",
     "flow-bin": "^0.73.0",
     "flow-webpack-plugin": "^1.2.0",
+    "fs-extra": "^6.0.1",
     "image-webpack-loader": "^4.2.0",
     "js-yaml": "^3.10.0",
     "node-sass": "^4.9.0",
