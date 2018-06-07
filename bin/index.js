@@ -2,6 +2,7 @@
 const program = require('commander')
 const childProcess = require('child_process')
 const colors = require('colors')
+const zip = require('zip-dir')
 //
 const setupUser = require('./utils/setupUser')
 
@@ -18,6 +19,7 @@ async function init() {
       'Produce bundle for src files, and place them in the `assets/` directory.',
     )
     .option('package', 'Zip theme for uploading to Shopify store.')
+    .option('zip', 'alias for pacakge')
     .parse(process.argv)
 
   if (program.init) {
@@ -47,7 +49,18 @@ async function init() {
     })
     build.stdout.on('data', data => console.log(data))
   }
-  if (program.package) console.log('packagin')
+  if (program.package || program.zip) {
+    zip(
+      process.cwd(),
+      {
+        filter: path => !/\.zip$|node_modules/.test(path),
+        saveTo: `${process.cwd()}/theme.zip`,
+      },
+      error => {
+        if (error) console.error(colors.red(error))
+      },
+    )
+  }
 }
 
 init().catch(error => {
