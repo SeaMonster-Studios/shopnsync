@@ -1,6 +1,0 @@
-# Ignore SMS Shopify source files
-./src/**
-.gitignore
-.git
-package.json
-README.md
