@@ -1,31 +1,55 @@
 #!/usr/bin/env node
 const program = require('commander')
+const childProcess = require('child_process')
+const colors = require('colors')
 //
 const setupUser = require('./utils/setupUser')
 
-program
-  .version('1.0.0-alpha', '-v, --version')
-  .option(
-    'init',
-    'Copy extendable config files: yml, eslint, babel, flow, and src directory with index.js file.',
-  )
-  .option('start', 'Start shopnsync development server.')
-  .option(
-    'build',
-    'Produce bundle for src files, and place them in the `assets/` directory.',
-  )
-  .option('package', 'Zip theme for uploading to Shopify store.')
-  .parse(process.argv)
+async function init() {
+  program
+    .version('1.0.0-alpha', '-v, --version')
+    .option(
+      'init',
+      'Copy extendable config files: webpack, package.json, config.yml, etc.',
+    )
+    .option('start', 'Start shopnsync development server.')
+    .option(
+      'build',
+      'Produce bundle for src files, and place them in the `assets/` directory.',
+    )
+    .option('package', 'Zip theme for uploading to Shopify store.')
+    .parse(process.argv)
 
-const init = async () => {
   if (program.init) {
-    await setupUser()
+    try {
+      console.log(
+        `[${colors.blue(
+          'Shopnsync',
+        )}] Copying files & installing dependencies...`,
+      )
+      await setupUser()
+      childProcess.exec('npm i', error => {
+        if (error) console.error(colors.red(error))
+      })
+    } catch (error) {
+      console.error(colors.red(error))
+    }
   }
   if (program.start) {
-    console.log('starting...')
+    const start = childProcess.exec('npm run start', error => {
+      if (error) console.error(colors.red(error))
+    })
+    start.stdout.on('data', data => console.log(data))
   }
-  if (program.build) console.log('building')
+  if (program.build) {
+    const build = childProcess.exec('npm run build', error => {
+      if (error) console.error(colors.red(error))
+    })
+    build.stdout.on('data', data => console.log(data))
+  }
   if (program.package) console.log('packagin')
 }
 
-init()
+init().catch(error => {
+  console.error(colors.red(error))
+})

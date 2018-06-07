@@ -180,7 +180,7 @@ const envConfig = (mode, common) =>
                     if (event === 'change') {
                       try {
                         console.log(
-                          `[${colors.blue('Shopynsync')}] ${colors.black(
+                          `[${colors.blue('Shopnsync')}] ${colors.black(
                             colors.bgYellow('Uploading'),
                           )} ${colors.cyan(file)} to Shopify...`,
                         )
@@ -189,7 +189,7 @@ const envConfig = (mode, common) =>
                         )
 
                         console.log(
-                          `[${colors.blue('Shopynsync')}] ${colors.cyan(
+                          `[${colors.blue('Shopnsync')}] ${colors.cyan(
                             file,
                           )} was  ${colors.black(
                             colors.bgGreen('successfully uploaded'),

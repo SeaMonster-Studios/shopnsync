@@ -15,13 +15,6 @@
     "build": "webpack --mode production",
     "start": "webpack-dev-server --mode development --inline --hot --color"
   },
-  "bin": {
-    "sns": "bin/index.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@github.com/SeaMonster-Studios/shopnsync.git"
-  },
   "author": "Logan Call @ SeaMonster Studios",
   "license": "MIT",
   "dependencies": {
@@ -35,7 +28,6 @@
     "browser-sync": "^2.24.4",
     "browser-sync-webpack-plugin": "^2.2.2",
     "colors": "^1.3.0",
-    "commander": "^2.15.1",
     "css-loader": "^0.28.11",
     "eslint": "^4.19.1",
     "eslint-plugin-babel": "^5.1.0",
@@ -45,13 +37,11 @@
     "file-loader": "^1.1.11",
     "flow-bin": "^0.73.0",
     "flow-webpack-plugin": "^1.2.0",
-    "fs-extra": "^6.0.1",
     "image-webpack-loader": "^4.2.0",
     "js-yaml": "^3.10.0",
     "node-sass": "^4.9.0",
     "postcss-loader": "^2.1.5",
     "sass-loader": "^7.0.1",
-    "shelljs": "^0.8.2",
     "style-loader": "^0.21.0",
     "webpack": "^4.10.2",
     "webpack-cli": "^2.1.4",
