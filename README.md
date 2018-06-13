@@ -25,6 +25,10 @@
 - Scss, CSS
 - Webpack Dev Server + BrowserSync
 
+## Notes
+
+If you get a *WDS Disconnected!* message in your console, be sure to enable the "Allow invalid certificates for resources loaded from localhost." in Chrome by going to [chrome://flags/#allow-insecure-localhost](chrome://flags/#allow-insecure-localhost)
+
 ## License
 
 MIT
