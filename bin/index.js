@@ -18,6 +18,14 @@ async function init() {
       'build',
       'Produce bundle for src files, and place them in the `assets/` directory.',
     )
+    .option(
+      'pull',
+      "An alias for themekit's `theme download`. Pull changes from Shopify store. This can overwrite any local files that have an older timestamp that what is in the Shopify store.",
+    )
+    .option(
+      'pull:force',
+      "An alias for themekit's `theme download --force`. Completely overwrites any local files with what is on the Shopify store, regardless of timestamp.",
+    )
     .option('package', 'Zip theme for uploading to Shopify store.')
     .option('zip', 'alias for pacakge')
     .parse(process.argv)
@@ -75,6 +83,58 @@ async function init() {
       upload.stdout.on('data', data => console.log(data))
     })
     build.stdout.on('data', data => console.log(data))
+  }
+  if (program.pull) {
+    console.log(
+      `[${colors.blue(
+        'Shopnsync',
+      )}] Pulling theme changes from Shopify Store (this may take a few minutes)...`,
+    )
+    const pull = childProcess.exec('theme download', error => {
+      error
+        ? console.error(`[${colors.blue('Shopnsync')}] ${colors.red(error)}`)
+        : console.log(
+            `[${colors.blue('Shopnsync')}] ${colors.black(
+              colors.green(
+                'Successfully pulled theme changes from Shopify Store',
+              ),
+            )}`,
+          )
+    })
+
+    let prevData = ''
+    pull.stdout.on('data', data => {
+      if (data !== prevData) {
+        prevData = data
+        console.log(data)
+      }
+    })
+  }
+  if (program['pull:force']) {
+    console.log(
+      `[${colors.blue(
+        'Shopnsync',
+      )}] Pulling theme changes from Shopify Store (this may take a few minutes)...`,
+    )
+    const pull = childProcess.exec('theme download --force', error => {
+      error
+        ? console.error(`[${colors.blue('Shopnsync')}] ${colors.red(error)}`)
+        : console.log(
+            `[${colors.blue('Shopnsync')}] ${colors.black(
+              colors.green(
+                'Successfully pulled theme changes from Shopify Store',
+              ),
+            )}`,
+          )
+    })
+
+    let prevData = ''
+    pull.stdout.on('data', data => {
+      if (data !== prevData) {
+        prevData = data
+        console.log(data)
+      }
+    })
   }
   if (program.package || program.zip) {
     console.log(`[${colors.blue('Shopnsync')}] Packaging theme...`)

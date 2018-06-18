@@ -13,7 +13,7 @@ const { development: yamlDev, ...yamlConfig } = yaml.load(
 const conf = {
   ...yamlDev,
   ...yamlConfig,
-  key: yamlConfig.preview_key || '',
+  key: yamlDev.preview_key || '',
   browserSyncPort: yamlConfig.port || 3600,
   webpackPort: yamlConfig.port - 50 || 3550,
   proxy: `https://${yamlDev.store}`,

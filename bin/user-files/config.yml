@@ -1,4 +1,5 @@
 development:
-  password:
-  theme_id:
-  store:
+  store: 
+  password: 
+  theme_id: 
+  preview_key: 
