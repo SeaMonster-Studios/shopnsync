@@ -18,6 +18,7 @@
   "author": "Logan Call @ SeaMonster Studios",
   "license": "MIT",
   "dependencies": {
+    "@seamonster-studios/shopnsync-scripts": "^1.0.0",
     "babel-core": "^6.26.3",
     "babel-eslint": "^8.2.3",
     "babel-loader": "^7.1.4",

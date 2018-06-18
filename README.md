@@ -27,7 +27,7 @@
 
 ## Notes
 
-If you get a *WDS Disconnected!* message in your console, be sure to enable the "Allow invalid certificates for resources loaded from localhost." in Chrome by going to [chrome://flags/#allow-insecure-localhost](chrome://flags/#allow-insecure-localhost)
+If you get a _WDS Disconnected!_ message in your console (and you're using Chrome), be sure to enable the "Allow invalid certificates for resources loaded from localhost." in Chrome by going to [chrome://flags/#allow-insecure-localhost](chrome://flags/#allow-insecure-localhost)
 
 ## License
 

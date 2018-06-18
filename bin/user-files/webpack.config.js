@@ -22,7 +22,7 @@ const conf = {
 const queryStringComponents = ['_fd=0']
 
 const commonConfig = {
-  entry: { main: './src/index.js' },
+  entry: ['./src/index.js'],
   output: {
     path: path.resolve(__dirname, 'assets'),
     filename: 'app.js',
@@ -93,6 +93,10 @@ const envConfig = (mode, common) =>
         ],
       }
     : {
+        entry: [
+          ...common.entry,
+          '@seamonster-studios/shopnsync-scripts/theme-preview-notice.js',
+        ],
         output: {
           ...common.output,
           publicPath: '/dist/',
@@ -191,6 +195,7 @@ const envConfig = (mode, common) =>
                     }
                   },
                 },
+                './test.js',
               ],
             },
             {

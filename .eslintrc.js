@@ -4,6 +4,7 @@ module.exports = {
     process: true,
     module: true,
     __dirname: true,
+    document: true,
   },
   env: {
     node: true,
