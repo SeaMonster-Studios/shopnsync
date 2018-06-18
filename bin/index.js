@@ -1,12 +1,15 @@
 #!/usr/bin/env node
 const program = require('commander')
-const childProcess = require('child_process')
 const colors = require('colors')
-const zip = require('zip-dir')
 //
-const setupUser = require('./utils/setupUser')
+const build = require('./options/build')
+const init = require('./options/init')
+const packageOption = require('./options/package')
+const pullForce = require('./options/pull:force')
+const pull = require('./options/pull')
+const start = require('./options/start')
 
-async function init() {
+async function initSns() {
   program
     .version('1.0.0-alpha', '-v, --version')
     .option(
@@ -31,155 +34,25 @@ async function init() {
     .parse(process.argv)
 
   if (program.init) {
-    try {
-      console.log(
-        `[${colors.blue(
-          'Shopnsync',
-        )}] Copying files & installing dependencies...`,
-      )
-      await setupUser()
-      childProcess.exec('npm i', error => {
-        if (error)
-          console.error(`[${colors.blue('Shopnsync')}] ${colors.red(error)}`)
-      })
-    } catch (error) {
-      console.error(`[${colors.blue('Shopnsync')}] ${colors.red(error)}`)
-    }
+    init()
   }
   if (program.start) {
-    console.log(
-      `[${colors.blue(
-        'Shopnsync',
-      )}] Starting Webpack and Browsersync servers...`,
-    )
-    const start = childProcess.exec('npm run start', error => {
-      if (error)
-        console.error(`[${colors.blue('Shopnsync')}] ${colors.red(error)}`)
-    })
-    let prevData = ''
-    start.stdout.on('data', data => {
-      if (data !== prevData) {
-        prevData = data
-        console.log(data)
-      }
-    })
+    start()
   }
   if (program.build) {
-    console.log(`[${colors.blue('Shopnsync')}] Compiling assets...`)
-
-    // Build webpack assets
-    const build = childProcess.exec('npm run build', error => {
-      error
-        ? console.error(`[${colors.blue('Shopnsync')}] ${colors.red(error)}`)
-        : console.log(
-            `[${colors.blue('Shopnsync')}] ${colors.black(
-              colors.green('Asset compilation successful.'),
-            )}`,
-          )
-      // upload new files
-      console.log(
-        `[${colors.blue('Shopnsync')}] Uploading changes to Shopify...`,
-      )
-      const upload = childProcess.exec('theme upload', error => {
-        error
-          ? console.error(`[${colors.blue('Shopnsync')}] ${colors.red(error)}`)
-          : console.log(
-              `[${colors.blue('Shopnsync')}] ${colors.black(
-                colors.green(
-                  'Assets and other changed files successfully uploaded to Shopify.',
-                ),
-              )}`,
-            )
-      })
-      let prevUploadData = ''
-      upload.stdout.on('data', data => {
-        if (data !== prevUploadData) {
-          prevUploadData = data
-          console.log(data)
-        }
-      })
-    })
-    let prevBuildData = ''
-    build.stdout.on('data', data => {
-      if (data !== prevBuildData) {
-        prevBuildData = data
-        console.log(data)
-      }
-    })
+    build()
   }
   if (program.pull) {
-    console.log(
-      `[${colors.blue(
-        'Shopnsync',
-      )}] Pulling theme changes from Shopify Store (this may take a few minutes)...`,
-    )
-    const pull = childProcess.exec('theme download', error => {
-      error
-        ? console.error(`[${colors.blue('Shopnsync')}] ${colors.red(error)}`)
-        : console.log(
-            `[${colors.blue('Shopnsync')}] ${colors.black(
-              colors.green(
-                'Successfully pulled theme changes from Shopify Store',
-              ),
-            )}`,
-          )
-    })
-
-    let prevData = ''
-    pull.stdout.on('data', data => {
-      if (data !== prevData) {
-        prevData = data
-        console.log(data)
-      }
-    })
+    pull()
   }
   if (program['pull:force']) {
-    console.log(
-      `[${colors.blue(
-        'Shopnsync',
-      )}] Pulling theme changes from Shopify Store (this may take a few minutes)...`,
-    )
-    const pull = childProcess.exec('theme download --force', error => {
-      error
-        ? console.error(`[${colors.blue('Shopnsync')}] ${colors.red(error)}`)
-        : console.log(
-            `[${colors.blue('Shopnsync')}] ${colors.black(
-              colors.green(
-                'Successfully pulled theme changes from Shopify Store',
-              ),
-            )}`,
-          )
-    })
-
-    let prevData = ''
-    pull.stdout.on('data', data => {
-      if (data !== prevData) {
-        prevData = data
-        console.log(data)
-      }
-    })
+    pullForce()
   }
   if (program.package || program.zip) {
-    console.log(`[${colors.blue('Shopnsync')}] Packaging theme...`)
-    zip(
-      process.cwd(),
-      {
-        filter: path => !/\.zip$|node_modules/.test(path),
-        saveTo: `${process.cwd()}/theme.zip`,
-      },
-      error => {
-        error
-          ? console.error(`[${colors.blue('Shopnsync')}] ${colors.red(error)}`)
-          : console.log(
-              `[${colors.blue('Shopnsync')}] ${colors.black(
-                colors.green('Theme package successful.'),
-              )}`,
-            )
-      },
-    )
+    packageOption()
   }
 }
 
-init().catch(error => {
+initSns().catch(error => {
   console.error(`[${colors.blue('Shopnsync')}] ${colors.red(error)}`)
 })
