@@ -49,39 +49,31 @@ async function init() {
     console.log(`[${colors.blue('Shopnsync')}] Compiling assets...`)
 
     // Build webpack assets
-    const build = childProcess.exec(
-      'npm run build > "/dev/null" 2>&1',
-      error => {
+    const build = childProcess.exec('npm run build', error => {
+      error
+        ? console.error(`[${colors.blue('Shopnsync')}] ${colors.red(error)}`)
+        : console.log(
+            `[${colors.blue('Shopnsync')}] ${colors.black(
+              colors.green('Asset compilation successful.'),
+            )}`,
+          )
+      // upload new files
+      console.log(
+        `[${colors.blue('Shopnsync')}] Uploading changes to Shopify...`,
+      )
+      const upload = childProcess.exec('theme upload', error => {
         error
           ? console.error(`[${colors.blue('Shopnsync')}] ${colors.red(error)}`)
           : console.log(
               `[${colors.blue('Shopnsync')}] ${colors.black(
-                colors.green('Asset compilation successful.'),
+                colors.green(
+                  'Assets and other changed files successfully uploaded to Shopify.',
+                ),
               )}`,
             )
-        // upload new files
-        console.log(
-          `[${colors.blue('Shopnsync')}] Uploading changes to Shopify...`,
-        )
-        const upload = childProcess.exec(
-          'theme upload > "/dev/null" 2>&1',
-          error => {
-            error
-              ? console.error(
-                  `[${colors.blue('Shopnsync')}] ${colors.red(error)}`,
-                )
-              : console.log(
-                  `[${colors.blue('Shopnsync')}] ${colors.black(
-                    colors.green(
-                      'Assets and other changed files successfully uploaded to Shopify.',
-                    ),
-                  )}`,
-                )
-          },
-        )
-        upload.stdout.on('data', data => console.log(data))
-      },
-    )
+      })
+      upload.stdout.on('data', data => console.log(data))
+    })
     build.stdout.on('data', data => console.log(data))
   }
   if (program.package || program.zip) {

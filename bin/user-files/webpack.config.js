@@ -174,9 +174,7 @@ const envConfig = (mode, common) =>
                             colors.yellow('Uploading'),
                           )} ${colors.cyan(file)} to Shopify...`,
                         )
-                        await shell.exec(
-                          `theme upload ${file} > "/dev/null" 2>&1`,
-                        )
+                        await shell.exec(`theme upload ${file}`)
 
                         console.log(
                           `[${colors.blue('Shopnsync')}] ${colors.cyan(
