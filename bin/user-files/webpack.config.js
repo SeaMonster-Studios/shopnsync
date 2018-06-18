@@ -169,7 +169,13 @@ const envConfig = (mode, common) =>
               open: false,
               files: [
                 {
-                  match: ['**/*.liquid', '**/*.json', './assets/**'],
+                  match: [
+                    '**/*.liquid',
+                    '**/*.json',
+                    './assets/**',
+                    '!assets/app.css',
+                    '!assets/app.js',
+                  ],
                   fn: async function(event, file) {
                     if (event === 'change') {
                       try {
