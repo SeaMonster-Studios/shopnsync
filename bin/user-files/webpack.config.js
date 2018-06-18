@@ -171,7 +171,7 @@ const envConfig = (mode, common) =>
                       try {
                         console.log(
                           `[${colors.blue('Shopnsync')}] ${colors.black(
-                            colors.bgYellow('Uploading'),
+                            colors.yellow('Uploading'),
                           )} ${colors.cyan(file)} to Shopify...`,
                         )
                         await shell.exec(
@@ -182,7 +182,7 @@ const envConfig = (mode, common) =>
                           `[${colors.blue('Shopnsync')}] ${colors.cyan(
                             file,
                           )} was  ${colors.black(
-                            colors.bgGreen('successfully uploaded'),
+                            colors.green('successfully uploaded'),
                           )} to Shopify.`,
                         )
                         const bs = require('browser-sync').get(

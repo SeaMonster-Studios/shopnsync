@@ -56,7 +56,7 @@ async function init() {
           ? console.error(`[${colors.blue('Shopnsync')}] ${colors.red(error)}`)
           : console.log(
               `[${colors.blue('Shopnsync')}] ${colors.black(
-                colors.bgGreen('Asset compilation successful.'),
+                colors.green('Asset compilation successful.'),
               )}`,
             )
         // upload new files
@@ -72,7 +72,7 @@ async function init() {
                 )
               : console.log(
                   `[${colors.blue('Shopnsync')}] ${colors.black(
-                    colors.bgGreen(
+                    colors.green(
                       'Assets and other changed files successfully uploaded to Shopify.',
                     ),
                   )}`,
@@ -85,6 +85,7 @@ async function init() {
     build.stdout.on('data', data => console.log(data))
   }
   if (program.package || program.zip) {
+    console.log(`[${colors.blue('Shopnsync')}] Packaging theme...`)
     zip(
       process.cwd(),
       {
@@ -92,8 +93,13 @@ async function init() {
         saveTo: `${process.cwd()}/theme.zip`,
       },
       error => {
-        if (error)
-          console.error(`[${colors.blue('Shopnsync')}] ${colors.red(error)}`)
+        error
+          ? console.error(`[${colors.blue('Shopnsync')}] ${colors.red(error)}`)
+          : console.log(
+              `[${colors.blue('Shopnsync')}] ${colors.black(
+                colors.green('Theme package successful.'),
+              )}`,
+            )
       },
     )
   }
