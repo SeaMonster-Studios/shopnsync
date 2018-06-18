@@ -56,7 +56,13 @@ async function init() {
       if (error)
         console.error(`[${colors.blue('Shopnsync')}] ${colors.red(error)}`)
     })
-    start.stdout.on('data', data => console.log(data))
+    let prevData = ''
+    start.stdout.on('data', data => {
+      if (data !== prevData) {
+        prevData = data
+        console.log(data)
+      }
+    })
   }
   if (program.build) {
     console.log(`[${colors.blue('Shopnsync')}] Compiling assets...`)
@@ -85,9 +91,21 @@ async function init() {
               )}`,
             )
       })
-      upload.stdout.on('data', data => console.log(data))
+      let prevUploadData = ''
+      upload.stdout.on('data', data => {
+        if (data !== prevUploadData) {
+          prevUploadData = data
+          console.log(data)
+        }
+      })
     })
-    build.stdout.on('data', data => console.log(data))
+    let prevBuildData = ''
+    build.stdout.on('data', data => {
+      if (data !== prevBuildData) {
+        prevBuildData = data
+        console.log(data)
+      }
+    })
   }
   if (program.pull) {
     console.log(
