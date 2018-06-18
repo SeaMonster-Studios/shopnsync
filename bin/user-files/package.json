@@ -13,7 +13,7 @@
   ],
   "scripts": {
     "build": "webpack --mode production",
-    "start": "webpack-dev-server --mode development --inline --hot --color"
+    "start": "webpack-dev-server --hot --inline --mode development"
   },
   "author": "Logan Call @ SeaMonster Studios",
   "license": "MIT",

@@ -13,18 +13,13 @@ const { development: yamlDev, ...yamlConfig } = yaml.load(
 const conf = {
   ...yamlDev,
   ...yamlConfig,
-  browserSyncPort: yamlConfig.port || 3500,
-  webpackPort: 9500,
-  proxy: `https://${yamlDev.store}/`,
-  proxyParams: `?preview_theme_id=${yamlDev.theme_id}`,
+  key: yamlConfig.preview_key || '',
+  browserSyncPort: yamlConfig.port || 3600,
+  webpackPort: yamlConfig.port - 50 || 3550,
+  proxy: `https://${yamlDev.store}`,
 }
 
-const queryStringComponents = []
-/**
- * Shopify sites with redirection enabled for custom domains force redirection
- * to that domain. `?_fd=0` prevents that forwarding. (Thanks Slate team!)
- */
-queryStringComponents.push('_fd=0')
+const queryStringComponents = ['_fd=0']
 
 const commonConfig = {
   entry: { main: './src/index.js' },
@@ -109,17 +104,12 @@ const envConfig = (mode, common) =>
           hot: true,
           https: true,
           publicPath: '/dist/',
-          overlay: {
-            errors: true,
-            warnings: false,
-          },
           proxy: [
             {
-              context: ['**'],
+              context: ['**', '!/dist/'],
               target: conf.proxy,
-              secure: false,
               changeOrigin: true,
-              autoRewrite: false,
+              autoRewrite: true,
             },
           ],
         },
@@ -142,13 +132,12 @@ const envConfig = (mode, common) =>
           new webpack.NamedModulesPlugin(),
           new BrowserSyncPlugin(
             {
-              // host: 'localhost',
               port: conf.browserSyncPort,
-              // https: true,
+              https: true,
               proxy: {
-                target: `https://localhost:${conf.webpackPort}${
-                  conf.proxyParams
-                }`,
+                target: `https://localhost:${conf.webpackPort}?key=${
+                  conf.key
+                }&preview_theme_id=${conf.theme_id}`,
                 middleware: (req, res, next) => {
                   const prefix = req.url.indexOf('?') > -1 ? '&' : '?'
                   req.url += prefix + queryStringComponents.join('&')
@@ -158,24 +147,21 @@ const envConfig = (mode, common) =>
               rewriteRules: [
                 {
                   match: new RegExp(conf.proxy, 'g'),
-                  fn: (req, res, match) =>
-                    `http://localhost:${conf.browserSyncPort}`,
+                  fn: () => `https://localhost:${conf.browserSyncPort}`,
                 },
                 {
-                  match: new RegExp('".*(app.css|app.js).*?"', 'gm'),
+                  match: new RegExp('".*assets/(app.js)"?', 'g'),
                   replace: '/dist/$1',
+                },
+                {
+                  match: 'previewBarInjector.init();',
+                  replace: '',
                 },
               ],
               open: false,
               files: [
                 {
-                  match: [
-                    '**/*.liquid',
-                    '**/*.json',
-                    './assets/**',
-                    '!./assets/app.js',
-                    '!./assets/app.css',
-                  ],
+                  match: ['**/*.liquid', '**/*.json', './assets/**'],
                   fn: async function(event, file) {
                     if (event === 'change') {
                       try {
@@ -184,7 +170,7 @@ const envConfig = (mode, common) =>
                             colors.bgYellow('Uploading'),
                           )} ${colors.cyan(file)} to Shopify...`,
                         )
-                        const response = await shell.exec(
+                        await shell.exec(
                           `theme upload ${file} > "/dev/null" 2>&1`,
                         )
 
@@ -208,8 +194,6 @@ const envConfig = (mode, common) =>
               ],
             },
             {
-              // prevent BrowserSync from reloading the page
-              // and let Webpack Dev Server take care of this
               reload: false,
             },
           ),
