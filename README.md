@@ -17,8 +17,10 @@
 
 - `sns init`: Copies Shopnsync files and dependencies to your theme folder.
 - `sns start`: Starts the Webpack developent server.
-- `sns build`: Bundles your assets and places them in the _assets_ directory of your theme.
-- `sns package`: Zips your theme so that you can manually upload it to the Shopify store if necessary.
+- `sns build`: Bundles your assets and places them in the _assets_ directory of your theme. It also uploads all file changes to Shopify.
+- `sns pull`: An alias for themekit's `theme download`. Pull changes from Shopify store. This can overwrite any local files that have an older timestamp that what is in the Shopify store.
+- `sns pull:force`: An alias for themekit's `theme download --force`. Completely overwrites any local files with what is on the Shopify store, regardless of timestamp.
+- `sns package`: Zip theme for uploading to Shopify store.
 
 ## Webpack Config Includes:
 

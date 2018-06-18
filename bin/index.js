@@ -16,7 +16,7 @@ async function init() {
     .option('start', 'Start shopnsync development server.')
     .option(
       'build',
-      'Produce bundle for src files, and place them in the `assets/` directory.',
+      'Bundles your assets and places them in the `assets` directory of your theme. It also uploads all file changes to Shopify.',
     )
     .option(
       'pull',
@@ -47,6 +47,11 @@ async function init() {
     }
   }
   if (program.start) {
+    console.log(
+      `[${colors.blue(
+        'Shopnsync',
+      )}] Starting Webpack and Browsersync servers...`,
+    )
     const start = childProcess.exec('npm run start', error => {
       if (error)
         console.error(`[${colors.blue('Shopnsync')}] ${colors.red(error)}`)
