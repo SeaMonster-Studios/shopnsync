@@ -1,6 +1,6 @@
 {
   "name": "@seamonster-studios/shopnsync",
-  "version": "1.0.0-beta.1",
+  "version": "1.0.0-beta.2",
   "description": "A utility for Shopify developers that uses Webpack, Browsersync, Themekit, ES2015",
   "main": "webpack.config.js",
   "keywords": [
