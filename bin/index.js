@@ -31,22 +31,57 @@ async function init() {
       )
       await setupUser()
       childProcess.exec('npm i', error => {
-        if (error) console.error(colors.red(error))
+        if (error)
+          console.error(`[${colors.blue('Shopnsync')}] ${colors.red(error)}`)
       })
     } catch (error) {
-      console.error(colors.red(error))
+      console.error(`[${colors.blue('Shopnsync')}] ${colors.red(error)}`)
     }
   }
   if (program.start) {
     const start = childProcess.exec('npm run start', error => {
-      if (error) console.error(colors.red(error))
+      if (error)
+        console.error(`[${colors.blue('Shopnsync')}] ${colors.red(error)}`)
     })
     start.stdout.on('data', data => console.log(data))
   }
   if (program.build) {
-    const build = childProcess.exec('npm run build', error => {
-      if (error) console.error(colors.red(error))
-    })
+    console.log(`[${colors.blue('Shopnsync')}] Compiling assets...`)
+
+    // Build webpack assets
+    const build = childProcess.exec(
+      'npm run build > "/dev/null" 2>&1',
+      error => {
+        error
+          ? console.error(`[${colors.blue('Shopnsync')}] ${colors.red(error)}`)
+          : console.log(
+              `[${colors.blue('Shopnsync')}] ${colors.black(
+                colors.bgGreen('Asset compilation successful.'),
+              )}`,
+            )
+        // upload new files
+        console.log(
+          `[${colors.blue('Shopnsync')}] Uploading changes to Shopify...`,
+        )
+        const upload = childProcess.exec(
+          'theme upload > "/dev/null" 2>&1',
+          error => {
+            error
+              ? console.error(
+                  `[${colors.blue('Shopnsync')}] ${colors.red(error)}`,
+                )
+              : console.log(
+                  `[${colors.blue('Shopnsync')}] ${colors.black(
+                    colors.bgGreen(
+                      'Assets and other changed files successfully uploaded to Shopify.',
+                    ),
+                  )}`,
+                )
+          },
+        )
+        upload.stdout.on('data', data => console.log(data))
+      },
+    )
     build.stdout.on('data', data => console.log(data))
   }
   if (program.package || program.zip) {
@@ -57,12 +92,13 @@ async function init() {
         saveTo: `${process.cwd()}/theme.zip`,
       },
       error => {
-        if (error) console.error(colors.red(error))
+        if (error)
+          console.error(`[${colors.blue('Shopnsync')}] ${colors.red(error)}`)
       },
     )
   }
 }
 
 init().catch(error => {
-  console.error(colors.red(error))
+  console.error(`[${colors.blue('Shopnsync')}] ${colors.red(error)}`)
 })

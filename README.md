@@ -27,7 +27,8 @@
 
 ## Notes
 
-If you get a _WDS Disconnected!_ message in your console (and you're using Chrome), be sure to enable the "Allow invalid certificates for resources loaded from localhost." in Chrome by going to [chrome://flags/#allow-insecure-localhost](chrome://flags/#allow-insecure-localhost)
+- If you get a _WDS Disconnected!_ message in your console (and you're using Chrome), be sure to enable the "Allow invalid certificates for resources loaded from localhost." in Chrome by going to [chrome://flags/#allow-insecure-localhost](chrome://flags/#allow-insecure-localhost)
+- If you're used to using Themekit you may notice that the Preview Bar is no longer visible. Our personal opinion is that it's visibliy in the way when developing. However, you'll still be able to see if you're previewing a theme via a [Shopnsync] message displayed in the console.
 
 ## License
 
