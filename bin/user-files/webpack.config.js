@@ -193,7 +193,6 @@ const envConfig = (mode, common) =>
                     }
                   },
                 },
-                './test.js',
               ],
             },
             {
