@@ -158,6 +158,10 @@ const envConfig = (mode, common) =>
                   replace: '/dist/$1',
                 },
                 {
+                  match: new RegExp('<link.*assets/app.css.*>', 'g'),
+                  replace: '',
+                },
+                {
                   match: 'previewBarInjector.init();',
                   replace: '',
                 },
