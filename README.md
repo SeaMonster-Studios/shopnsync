@@ -2,9 +2,9 @@
 
 ## Setup
 
-1.  Get a local copy of your theme and then do the following...
-2.  Install `@seamonster-studios/shopnsync` globally
-3.  Install @shopify/themekit globally
+1.  Get a local copy of your theme (any theme will do) and then do the following...
+2.  Install shopnsync globally: `npm i -g @seamonster-studios/shopnsync`
+3.  Install themekit globally: `npm i -g @shopify/themekit`
 4.  Run `sns init` to copy files and install dependencies
 5.  Open `config.yml` and add your _theme_id_, _store_, and private app _password_ per [Themekit's documentation](https://shopify.github.io/themekit/configuration/)
 6.  If your site is currently protected by a password, you'll also need to add the access _key_ to config.yml. You can get this by:
