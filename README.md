@@ -9,6 +9,7 @@
     2.  `brew install themekit`
 4.  Run `sns init` to copy files and install dependencies
 5.  Open `config.yml` and add your _theme_id_, _store_, and private app _password_ per [Themekit's documentation](https://shopify.github.io/themekit/configuration/)
+    - When you create your private app, be sure to give it read/write permissions for your theme files. Also, you need the _Password_ of the private app, not the _API_key_.
 6.  If your site is currently protected by a password, you'll also need to add the access _key_ to config.yml. You can get this by:
     1.  Going to the _themes_ page of your shopify store.
     2.  Click on the _Actions_ dropdown next to the theme you're working on.
