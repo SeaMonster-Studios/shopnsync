@@ -41,7 +41,7 @@
 
 ## Creating a trusted local SSL certificate
 
-We recommend doing this so your `https` requests aren't blocked. Please not that this only works in macOS. You can find the orignal instructions for this [here].(https://github.com/Shopify/slate/wiki/How-to-create-a-trusted-local-SSL-certificate)
+We recommend doing this so your `https` requests aren't blocked. Please not that this only works in macOS. You can find the orignal instructions for this [here](https://github.com/Shopify/slate/wiki/How-to-create-a-trusted-local-SSL-certificate).
 
 1.  Copy and paste the command below into your terminal to navigate to your home directory, create a folder called _.localhost_ssl_, and navigate to that folder:
 
