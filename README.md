@@ -35,9 +35,52 @@
 - Scss, CSS
 - Webpack Dev Server + BrowserSync
 
+## Creating a trusted local SSL certificate
+
+We recommend doing this so your `https` requests aren't blocked. Please not that this only works in macOS. You can find the orignal instructions for this [here].(https://github.com/Shopify/slate/wiki/How-to-create-a-trusted-local-SSL-certificate)
+
+1.  Copy and paste the command below into your terminal to navigate to your home directory, create a folder called _.localhost_ssl_, and navigate to that folder:
+
+```
+cd && mkdir .localhost_ssl && cd .localhost_ssl
+```
+
+2.  Copy and paste the command below to generate a new SSL certificate and key:
+
+```
+openssl req \
+    -newkey rsa:2048 \
+    -x509 \
+    -nodes \
+    -keyout server.key \
+    -new \
+    -out server.crt \
+    -subj /CN=localhost \
+    -reqexts SAN \
+    -extensions SAN \
+    -config <(cat /System/Library/OpenSSL/openssl.cnf \
+        <(printf '[SAN]\nsubjectAltName=DNS:localhost')) \
+    -sha256 \
+    -days 3650
+```
+
+3.  Open the current folder by entering `open .` in your terminal, and double-click on the _server.crt_ file.
+
+4.  The Keychain Access app will open. Click _Add Certificate_
+
+5.  In the side navigation column of the Keychain Access app, in the _Category_ panel, click _Certificates_ and double click the _localhost_ certificate from the list of certificates that was just created.
+
+6.  Once the window has opened, open the _Trust_ accordion panel.
+
+7.  Update the _Secure Sockets Layer (SSL)_ value to _Always Trust_.
+
+8.  Close the window and you will be prompted to input your password to save your changes.
+
+9.  Your device is now all set up to trust https://localhost
+
 ## Notes
 
-- If you get a _WDS Disconnected!_ message in your console (and you're using Chrome), be sure to enable the "Allow invalid certificates for resources loaded from localhost." in Chrome by going to [chrome://flags/#allow-insecure-localhost](chrome://flags/#allow-insecure-localhost)
+- If you didn't create a trusted local SSL certificate and are getting a _WDS Disconnected!_ message in your console (and you're using Chrome), be sure to enable the "Allow invalid certificates for resources loaded from localhost." in Chrome by going to [chrome://flags/#allow-insecure-localhost](chrome://flags/#allow-insecure-localhost)
 - If you're used to using Themekit you may notice that the Preview Bar is no longer visible. Our personal opinion is that it's visibliy in the way when developing. However, you'll still be able to see if you're previewing a theme via a [Shopnsync] message displayed in the console.
 
 ## Why Shopnsync (why not Slate)?
