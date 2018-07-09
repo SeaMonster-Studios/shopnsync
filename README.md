@@ -9,7 +9,9 @@
     2.  `brew install themekit`
 4.  Run `sns init` to copy files and install dependencies
 5.  Open `config.yml` and add your _theme_id_, _store_, and private app _password_ per [Themekit's documentation](https://shopify.github.io/themekit/configuration/)
+
     - When you create your private app, be sure to give it read/write permissions for your theme files. Also, you need the _Password_ of the private app, not the _API_key_.
+
 6.  If your site is currently protected by a password, you'll also need to add the access _key_ to config.yml. You can get this by:
     1.  Going to the _themes_ page of your shopify store.
     2.  Click on the _Actions_ dropdown next to the theme you're working on.
@@ -93,7 +95,7 @@ Slate is a zero-config setup, but extending or modifying that config wasn’t po
 
 In the same vein as theme configuration is installing Shopify Apps. We like the ability to use Shopify apps, and to be able to install them at any stage of development. Sometimes apps need to inject code into different templates. Because your theme is entirely generated from source when using Slate, it makes modifying any code on Shopify a frustrating process. We found the round trip of running a Slate build, pulling the theme from Shopify into a different directory, diffing those changes, copying those differences into the src files, then recompiling and uploading that theme to Shopify to be tedious.
 
-Overall, Slate is a great tool and it is a good fit for a lot of developers. It just doesn’t go well with our workflow, and think there may be other devs. out there who feel the same. So, if you want a modern developer workflow building Shopify themes that makes using Shopify Apps a breeze, and with full config customization, look no further.
+Overall, we think Slate is a great tool and it is a good fit for a lot of developers. It just doesn’t go well with our workflow, and think there may be other devs out there who feel the same need for something more configurable. So, if you want a modern developer workflow building Shopify themes that makes using Shopify Apps a breeze, and with full config customization, look no further.
 
 ### Disclaimers
 
