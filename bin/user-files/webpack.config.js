@@ -1,31 +1,31 @@
-const path = require('path')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
-const BrowserSyncPlugin = require('browser-sync-webpack-plugin')
-const fs = require('fs')
-const yaml = require('js-yaml')
-const webpack = require('webpack')
-const shell = require('shelljs')
-const colors = require('colors')
+const path = require("path");
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const BrowserSyncPlugin = require("browser-sync-webpack-plugin");
+const fs = require("fs");
+const yaml = require("js-yaml");
+const webpack = require("webpack");
+const shell = require("shelljs");
+const colors = require("colors");
 
 const { development: yamlDev, ...yamlConfig } = yaml.load(
-  fs.readFileSync('./config.yml', { encoding: 'utf-8' }),
-)
+  fs.readFileSync("./config.yml", { encoding: "utf-8" })
+);
 const conf = {
   ...yamlDev,
   ...yamlConfig,
-  key: yamlDev.preview_key || '',
+  key: yamlDev.preview_key || "",
   browserSyncPort: yamlConfig.port || 3600,
   webpackPort: yamlConfig.port - 50 || 3550,
-  proxy: `https://${yamlDev.store}`,
-}
+  proxy: `https://${yamlDev.store}`
+};
 
-const queryStringComponents = ['_fd=0']
+const queryStringComponents = ["_fd=0"];
 
 const commonConfig = {
-  entry: ['./src/index.js'],
+  entry: ["./src/index.js"],
   output: {
-    path: path.resolve(__dirname, 'assets'),
-    filename: 'app.js',
+    path: path.resolve(__dirname, "assets"),
+    filename: "app.js"
   },
   module: {
     rules: [
@@ -33,43 +33,43 @@ const commonConfig = {
         test: /\.js$/,
         exclude: /node_modules/,
         use: {
-          loader: 'babel-loader',
-        },
+          loader: "babel-loader"
+        }
       },
       {
         test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
         use: [
           {
-            loader: 'file-loader',
+            loader: "file-loader",
             options: {
-              name: '[name].[ext]',
-              outputPath: 'assets/',
-            },
-          },
-        ],
+              name: "[name].[ext]",
+              outputPath: "assets/"
+            }
+          }
+        ]
       },
       {
         test: /\.(gif|png|jpe?g)$/i,
         use: [
-          'file-loader',
+          "file-loader",
           {
-            loader: 'image-webpack-loader',
+            loader: "image-webpack-loader",
             options: {
               bypassOnDebug: true, // webpack@1.x
               disable: true, // webpack@2.x and newer
-              name: '[name].[ext]',
-              outputPath: 'assets/',
-            },
-          },
-        ],
-      },
-    ],
+              name: "[name].[ext]",
+              outputPath: "assets/"
+            }
+          }
+        ]
+      }
+    ]
   },
-  plugins: [],
-}
+  plugins: []
+};
 
 const envConfig = (mode, common) =>
-  mode !== 'development'
+  mode !== "development"
     ? {
         module: {
           rules: [
@@ -77,45 +77,45 @@ const envConfig = (mode, common) =>
             {
               test: /\.(s)?css$/,
               use: ExtractTextPlugin.extract({
-                fallback: 'style-loader',
-                use: ['css-loader', 'postcss-loader', 'sass-loader'],
-              }),
-            },
-          ],
+                fallback: "style-loader",
+                use: ["css-loader", "postcss-loader", "sass-loader"]
+              })
+            }
+          ]
         },
         plugins: [
           ...common.plugins,
           new ExtractTextPlugin({
-            filename: 'app.css',
+            filename: "app.css",
             disable: false,
-            allChunks: true,
-          }),
-        ],
+            allChunks: true
+          })
+        ]
       }
     : {
         entry: [
           ...common.entry,
-          '@seamonster-studios/shopnsync-scripts/theme-preview-notice.js',
+          "@seamonster-studios/shopnsync-scripts/theme-preview-notice.js"
         ],
         output: {
           ...common.output,
-          publicPath: '/dist/',
+          publicPath: "/dist/"
         },
-        devtool: 'inline-source-map',
+        devtool: "inline-source-map",
         devServer: {
           compress: false,
           port: conf.webpackPort,
           hot: true,
           https: true,
-          publicPath: '/dist/',
+          publicPath: "/dist/",
           proxy: [
             {
-              context: ['**', '!/dist/'],
+              context: ["**", "!/dist/"],
               target: conf.proxy,
               changeOrigin: true,
-              autoRewrite: true,
-            },
-          ],
+              autoRewrite: true
+            }
+          ]
         },
         module: {
           rules: [
@@ -123,13 +123,13 @@ const envConfig = (mode, common) =>
             {
               test: /\.(s)?css$/,
               use: [
-                'style-loader',
-                'css-loader',
-                'postcss-loader',
-                'sass-loader',
-              ],
-            },
-          ],
+                "style-loader",
+                "css-loader",
+                "postcss-loader",
+                "sass-loader"
+              ]
+            }
+          ]
         },
         plugins: [
           ...common.plugins,
@@ -143,76 +143,77 @@ const envConfig = (mode, common) =>
                   conf.key
                 }&preview_theme_id=${conf.theme_id}`,
                 middleware: (req, res, next) => {
-                  const prefix = req.url.indexOf('?') > -1 ? '&' : '?'
-                  req.url += prefix + queryStringComponents.join('&')
-                  next()
-                },
+                  const prefix = req.url.indexOf("?") > -1 ? "&" : "?";
+                  req.url += prefix + queryStringComponents.join("&");
+                  next();
+                }
               },
               rewriteRules: [
                 {
-                  match: new RegExp(conf.proxy, 'g'),
-                  fn: () => `https://localhost:${conf.browserSyncPort}`,
+                  match: new RegExp(conf.proxy, "g"),
+                  fn: () => `https://localhost:${conf.browserSyncPort}`
                 },
                 {
-                  match: new RegExp('".*assets/(app.js)"?', 'g'),
-                  replace: '/dist/$1',
+                  match: new RegExp('".*assets/(app.js)"?', "g"),
+                  replace: "/dist/$1"
                 },
                 {
-                  match: new RegExp('<link.*assets/app.css.*>', 'g'),
-                  replace: '',
+                  match: new RegExp("<link.*assets/app.css.*>", "g"),
+                  replace: ""
                 },
                 {
-                  match: 'previewBarInjector.init();',
-                  replace: '',
-                },
+                  match: "previewBarInjector.init();",
+                  replace: ""
+                }
               ],
               open: false,
               files: [
                 {
                   match: [
-                    '**/*.liquid',
-                    '**/*.json',
-                    './assets/**',
-                    '!assets/app.css',
-                    '!assets/app.js',
+                    "**/*.liquid",
+                    "**/*.json",
+                    "./assets/**",
+                    "!assets/app.css",
+                    "!assets/app.js"
                   ],
                   fn: async function(event, file) {
-                    if (event === 'change') {
+                    if (event === "change") {
                       try {
                         console.log(
-                          `[${colors.blue('Shopnsync')}] ${colors.black(
-                            colors.yellow('Uploading'),
-                          )} ${colors.cyan(file)} to Shopify...`,
-                        )
-                        await shell.exec(`theme upload ${file}`)
-
-                        console.log(
-                          `[${colors.blue('Shopnsync')}] ${colors.cyan(
-                            file,
-                          )} was  ${colors.black(
-                            colors.green('successfully uploaded'),
-                          )} to Shopify.`,
-                        )
-                        const bs = require('browser-sync').get(
-                          'bs-webpack-plugin',
-                        )
-                        bs.reload()
+                          `[${colors.blue("Shopnsync")}] ${colors.black(
+                            colors.yellow("Uploading")
+                          )} ${colors.cyan(file)} to Shopify...`
+                        );
+                        // TODO: We use to just use themekit's `upload` command to upload a single file, but they've since removed this, so we're just running themekit's `watch` at the same time as webpack... but it makes notices and live reload off. The setTimeout is a temp. solution
+                        setTimeout(() => {
+                          console.log(
+                            `[${colors.blue("Shopnsync")}] ${colors.cyan(
+                              file
+                            )} was  ${colors.black(
+                              colors.green("successfully uploaded")
+                            )} to Shopify.`
+                          );
+                          const bs = require("browser-sync").get(
+                            "bs-webpack-plugin"
+                          );
+                          bs.reload();
+                        }, 1500);
                       } catch (error) {
-                        throw new Error(error)
+                        throw new Error(error);
                       }
                     }
-                  },
-                },
-              ],
+                  }
+                }
+              ]
             },
             {
-              reload: false,
-            },
-          ),
-        ],
-      }
+              reload: false
+            }
+          )
+        ]
+      };
 
 module.exports = (env, argv) => ({
   ...commonConfig,
-  ...envConfig(argv.mode, commonConfig),
-})
+  ...envConfig(argv.mode, commonConfig)
+});
