@@ -1,5 +1,7 @@
 # Shopnsync
 
+> DEPRECATED: Recommend using Themekit + Prepros (https://www.shopify.com/partners/blog/live-reload-shopify-sass)
+
 ## Setup
 
 1.  Get a local copy of your theme (any theme will do) and then do the following...
